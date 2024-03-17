@@ -30,7 +30,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'ksadlhfgalkjhfdgbsadfslkjhsb'
 
 # MongoDB connection setup
-uri = "mongodb+srv://mpanighetti:c3inqtGr3E9n4fXG@webarch-tvserver.b1ncqok.mongodb.net/?retryWrites=true&w=majority"
+uri = "mongodb+srv://"
 # Create a new client and connect to the server
 client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile='cacert-2023-08-22.pem')
 

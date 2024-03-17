@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Admin UI Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        h2 {
+            color: white;
+            padding-left: 20px;
+        }
+        /* CSS for charts */
+        canvas {
+            max-width: 65vh;
+            max-height: 65vh; /* Limit the height of each chart */
+            padding-left: 20px;
+        }
+        form {
+            padding-left: 20px; /* Add left padding to the form */
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-container">
+    <!-- User Activity Timeline Chart -->
+    <h2>User Activity Timeline</h2>
+    <form action="/admin" method="get">
+        <input type="date" name="start_date" value="{{ start_date }}">
+        <input type="date" name="end_date" value="{{ end_date }}">
+        <select name="increment">
+            <option value="hourly" {% if increment == 'hourly' %}selected{% endif %}>Hourly</option>
+            <option value="daily" {% if increment == 'daily' %}selected{% endif %}>Daily</option>
+        </select>
+        <button type="submit">Update Chart</button>
+    </form>
+    <canvas id="userActivityChart"></canvas>
+
+    <!-- User Total Time Chart -->
+    <h2>User Total Time</h2>
+    <canvas id="userTotalTimeChart"></canvas>
+
+    <div id="concurrentUserData" data-concurrent-users='{{ chart_data | tojson | safe }}'></div>
+    <div id="userTotalTimeData" data-user-total-time='{{ user_time_data | tojson | safe }}'></div>
+
+    <script>
+        try {
+            var concurrentUsersRawData = document.getElementById('concurrentUserData').getAttribute('data-concurrent-users');
+            console.log("Concurrent Users Raw Data: ", concurrentUsersRawData);
+            var concurrentUsers = JSON.parse(concurrentUsersRawData);
+            console.log("Parsed Concurrent Users: ", concurrentUsers);
+
+            Chart.defaults.global.defaultFontColor = 'white';
+
+            // User Activity Timeline Chart
+            var userActivityCtx = document.getElementById('userActivityChart').getContext('2d');
+            var userActivityChart = new Chart(userActivityCtx, {
+                type: 'line',
+                data: {
+                    labels: concurrentUsers.map(data => data.time),
+                    datasets: [{
+                        label: 'Concurrent Users',
+                        data: concurrentUsers.map(data => data.count),
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            gridLines: {
+                                color: 'rgba(255, 255, 255, 0.3)'
+                            }
+                        }],
+                        yAxes: [{
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            },
+                            gridLines: {
+                                color: 'rgba(255, 255, 255, 0.3)'
+                            }
+                        }]
+                    }
+                }
+            });
+
+            var userTimeRawData = document.getElementById('userTotalTimeData').getAttribute('data-user-total-time');
+            console.log("User Time Raw Data: ", userTimeRawData);
+            var userTimeData = JSON.parse(userTimeRawData);
+            console.log("Parsed User Time: ", userTimeData);
+
+            // User Total Time Chart
+            var userTotalTimeCtx = document.getElementById('userTotalTimeChart').getContext('2d');
+            var userTotalTimeChart = new Chart(userTotalTimeCtx, {
+                type: 'horizontalBar',
+                data: {
+                    labels: userTimeData.map(data => data.username),
+                    datasets: [{
+                        label: 'Total Time Spent (minutes)',
+                        data: userTimeData.map(data => data.total_time),
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    scales: {
+                        xAxes: [{
+                            beginAtZero: true,
+                            gridLines: {
+                                color: 'rgba(255, 255, 255, 0.3)'
+                            }
+                        }],
+                        yAxes: [{
+                            gridLines: {
+                                color: 'rgba(255, 255, 255, 0.3)'
+                            }
+                        }]
+                    }
+                }
+            });
+
+            // You can add or modify other charts here as needed.
+        } catch (error) {
+            console.log("Error parsing JSON: ", error);
+        }
+    </script>
+    </div>
+    <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+    <a href="{{ url_for('index') }}" class="back-button">Back To Chart</a>
+    
+    <script type="text/javascript">
+        var currentUsername = "{{ username }}";
+    </script>
+    <script src="static//js//session_handling.js"></script>
+</body>
+</html>
+
+

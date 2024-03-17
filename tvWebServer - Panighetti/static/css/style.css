@@ -1,0 +1,111 @@
+/* style.css */
+body {
+    background-color: rgba(19,23,34,255);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column; /* Organize children in a column */
+    height: 100vh; /* Full height of the viewport */
+}
+.tradingview-widget-container {
+    width: 100%; /* Full width */
+    flex-grow: 1; /* Grow to fill available space, respecting aspect ratio */
+    position: relative; /* For positioning the inner div */
+}
+#tradingview_ad0e5 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.content-container {
+    flex-grow: 1;
+    overflow: auto; /* Adds scroll to content container if content overflows */
+    /* Add any additional styling needed for the content container */
+}
+.logout-button {
+    display: block;
+    width: 98%;
+    margin: 5px auto; /* Centers the button */
+    padding: 10px;
+    background-color: rgba(13,13,13,1);
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 2px;
+}
+.admin-button {
+    display: block;
+    width: 98%;
+    margin: 5px auto; /* Centers the button */
+    padding: 10px;
+    background-color: rgba(13,13,13,1);
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 2px;
+}
+.back-button {
+    display: block;
+    width: 98%;
+    margin: 5px auto; /* Centers the button */
+    padding: 10px;
+    background-color: rgba(13,13,13,1);
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 2px;
+}
+.form-field {
+    display: flex;
+    align-items: center; /* Aligns items vertically in the center */
+    margin-bottom: 15px; /* Space between each form field */
+}
+.form-field label {
+    margin-right: 10px; /* Space between label and input */
+    width: 35%; /* Adjust width as needed */
+    text-align: right; /* Aligns label text to the right */
+}
+.form-field input {
+    width: 35%; /* Adjust width as needed */
+    padding: 5px; /* Padding inside the input box */
+}
+.form-container {
+    width: 100%;
+    max-width: 600px; /* Adjust as needed */
+    margin: 40px auto;
+    padding: 0px;
+    text-align: center;
+}
+.form-container label {
+    color: white; /* Replace with your desired color */
+    /* Other styles for labels if needed, such as font-size, font-weight, etc. */
+}
+.form-container div {
+    margin-bottom: 0px; /* Adds space between form elements */
+}
+.form-container form div {
+    padding: 5px 10px; /* Adds vertical padding to each form field */
+}
+.form-container a {
+    display: inline-block;
+    margin-top: 0px; /* Space above the link */
+    padding: 10px; /* Padding around the link text */
+    color: white; /* Replace with your desired color */
+    text-decoration: none; /* Optional: Removes underline from the link */
+}
+.form-button {
+    width: 80%;
+    padding: 10px;
+    margin-top: 20px; /* Adds space above the button */
+    background-color: rgba(13,13,13,1);
+    color: white;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    font-weight: bold;
+}
